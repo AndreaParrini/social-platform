@@ -72,6 +72,7 @@ var_dump($result);
                                         <h5 class="card-title"><?= $username; ?></h5>
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item p-0 pt-2 pb-2"><?= $email; ?></li>
+                                            <!-- Uso strtotime() per convertite la stringa della data in timestamp e poi con date() indico il formato della data che volgio ottonere -->
                                             <li class="list-group-item p-0 pt-2 pb-2"><?= date('d-m-Y', strtotime($birthdate)); ?></li>
                                             <li class="list-group-item p-0 pt-2 pb-2">Cellulare : <?= $phone; ?></li>
                                             <li class="list-group-item p-0 pt-2 pb-2">
