@@ -2,6 +2,10 @@
 
 class DB
 {
+    /**
+     * Function to connect with databse
+     * @return param of connection with DB
+     */
     public static function Connect()
     {
         define("DB_SERVERNAME", "localhost");
@@ -17,5 +21,14 @@ class DB
             die;
         }
         return $connection;
+    }
+
+    /**
+     * Function to close connection whit database
+     * @param $connection param that contain the connection with DB
+     */
+    public static function Close($connection)
+    {
+        $connection->close();
     }
 }
