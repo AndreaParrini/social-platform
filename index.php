@@ -1,10 +1,15 @@
 <?php
 
+/* require file DB.php  */
 require __DIR__ . '/./DB.php';
 
+/* Uso la funzione statica Connect() dell'oggetto DB, per connetterci al DB e associo il risultato alla variabile $connection */
 $connection = DB::Connect();
 
+/* controllo se la variabile $_POST[orderBy] è vuota */
 if (empty($_POST['orderBy'])) {
+
+    /* Associo alla variabile $sql la query da fare al database */
     $sql =
         'SELECT `users`.*, COUNT(`likes`.`post_id`) AS `total_like`
          FROM `users`
@@ -12,10 +17,15 @@ if (empty($_POST['orderBy'])) {
          JOIN `likes` ON `likes`.`post_id` = `posts`.`id`
          GROUP BY `users`.`id`
          ORDER BY `total_like`';
+
+    /* Uso la funzione query() per recuperare tutti i risultati e li associo alla varibile $result  */
     $result = $connection->query($sql);
 }
 
+/* contorllo se la la variabile $_POST[orderBy] non è vuota */
 if (!empty($_POST['orderBy'])) {
+
+    /* preparo la query da fare nel caso la varibile non è vuota concatenando la variabile alla query. */
     $sql =
         'SELECT `users`.*, COUNT(`likes`.`post_id`) AS `total_like`
          FROM `users`
@@ -23,14 +33,19 @@ if (!empty($_POST['orderBy'])) {
          JOIN `likes` ON `likes`.`post_id` = `posts`.`id`
          GROUP BY `users`.`id`
          ORDER BY `total_like`' . $_POST['orderBy'];
+
+    /* Uso la funzione query() per recuperare tutti i risultati e li associo alla varibile $result  */
     $result = $connection->query($sql);
 }
 
+/* Chiudo la connesione con il Database */
 DB::Close($connection);
 
 ?>
-
+<!-- /* require file head.php  */ -->
 <?php require_once __DIR__ . '/head.php' ?>
+
+<!-- /* require file header.php  */ -->
 <?php require_once __DIR__ . '/header.php' ?>
 
 <main>
@@ -57,7 +72,12 @@ DB::Close($connection);
 
 
         <div class="row">
+
+            <!-- con l'iterazione while ciclo all'interno dei risulati ottenuti, con la funzione fetch_assoc() attribuisco a $rows ad ogni iterazione un valore diverso 
+            fino a che attribuisco un valore il ciclo while continua, quando non ci sono più dati si interrompe -->
             <?php while ($rows = $result->fetch_assoc()) :
+
+                /* effettuo il destructring dell'oggetto attribuito alla varibile $rows (i risultati della query.) */
                 [
                     'id' => $userID,
                     'username' => $username,
@@ -78,7 +98,7 @@ DB::Close($connection);
                                     <h5 class="card-title"><?= $username; ?></h5>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item p-0 pt-2 pb-2 border-dark bg-info-subtle"><?= $email; ?></li>
-                                        <!-- Uso strtotime() per convertite la stringa della data in timestamp e poi con date() indico il formato della data che volgio ottonere -->
+                                        <!-- Uso strtotime() per convertite la stringa della data in timestamp e poi con date() indico il formato della data che voglio ottenere -->
                                         <li class="list-group-item p-0 pt-2 pb-2 border-dark bg-info-subtle"><?= date('d-m-Y', strtotime($birthdate)); ?></li>
                                         <li class="list-group-item p-0 pt-2 pb-2 border-dark bg-info-subtle">Cellulare : <?= $phone; ?></li>
                                         <li class="list-group-item p-0 pt-2 pb-2 border-dark bg-info-subtle">
@@ -95,5 +115,5 @@ DB::Close($connection);
     </div>
 </main>
 
-
+<!-- /* require file footer.php  */ -->
 <?php require_once __DIR__ . '/footer.php' ?>
