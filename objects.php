@@ -48,8 +48,6 @@ while ($row = $allPosts->fetch_assoc()) {
     ] = $row;
     array_push($posts, new Post($id, $user, $title, $date, $tags, addVideoOrPhoto($id, $medias)));
 }
-
-/* var_dump($posts); */
 ?>
 
 <!doctype html>
@@ -60,7 +58,42 @@ while ($row = $allPosts->fetch_assoc()) {
 
 <main>
     <div class="container">
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr class="">
+                    <th scope="col">ID</th>
+                    <th scope="col">USER ID</th>
+                    <th scope="col">TITLE</th>
+                    <th scope="col">DATE</th>
+                    <th scope="col">TAGS</th>
+                    <th scope="col">ID MEDIA</th>
+                    <th scope="col">USER MEDIA</th>
+                    <th scope="col">PATH MEDIA</th>
+                    <th scope="col">TYPE MEDIA</th>
 
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <?php
+                foreach ($posts as $post) :
+                ?>
+                    <tr class="p-3">
+                        <th scope="row"><?= $post->id; ?></th>
+                        <td><?= $post->user; ?></td>
+                        <td><?= $post->title; ?></td>
+                        <td><?= $post->getDataTimePublisher(); ?></td>
+                        <td>
+                            <?= str_replace('"', '', str_replace(']', '', str_replace('[', '', $post->tags))); ?>
+                        </td>
+                        <td><?= $post->media->id; ?></td>
+                        <td><?= $post->media->user; ?></td>
+                        <td><?= $post->media->getPath(); ?></td>
+                        <td><?= $post->media->type; ?></td>
+
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </main>
 
