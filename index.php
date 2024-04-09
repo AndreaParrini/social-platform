@@ -62,7 +62,7 @@ DB::Close($connection);
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" value="DESC" name="orderBy" id="orderByDesc" />
-                    <label class="form-check-label" for="OrderByDesc"> Decrescente </label>
+                    <label class="form-check-label" for="orderByDesc"> Decrescente </label>
                 </div>
             </div>
             <button type="submit" class="btn btn-info mb-3">
