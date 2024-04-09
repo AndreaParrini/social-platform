@@ -7,21 +7,24 @@ class Post
     public $title;
     public $date;
     public $tags;
+    public $media;
 
     /**
      * @param int $id the id of the post
      * @param int $user the id of the user by public the post
      * @param String $title decribe of the post
      * @param String $date format is "Y-m-d H:i:s"
-     * @param array $tags the array that contain all tags of post
+     * @param String $tags the array that contain all tags of post
+     * @param Media $media
      */
-    public function __construct(int $id, int $user, string $title, string $date, array $tags)
+    public function __construct(int $id, int $user, string $title, string $date, string $tags, Media $media)
     {
         $this->id = $id;
         $this->user = $user;
         $this->title = $title;
         $this->date = $date;
         $this->tags = $tags;
+        $this->media = $media;
     }
 
     /**

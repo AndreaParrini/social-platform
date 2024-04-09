@@ -21,7 +21,7 @@ class Media
 
 class Video extends Media
 {
-    public static $type = 'video';
+    public $type = 'video';
     public function __construct(int $id, int $user, string $path)
     {
         parent::__construct($id, $user, $path);
@@ -30,7 +30,7 @@ class Video extends Media
 
 class Immagine extends Media
 {
-    public static $type = 'photo';
+    public $type = 'photo';
     public function __construct(int $id, int $user, string $path)
     {
         parent::__construct($id, $user, $path);
