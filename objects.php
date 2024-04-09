@@ -58,7 +58,8 @@ while ($row = $allPosts->fetch_assoc()) {
 
 <main>
     <div class="container">
-        <table class="table table-striped mt-3">
+        <h3 class="text-center text-uppercase m-5">Objects</h3>
+        <table class="table mt-3">
             <thead>
                 <tr class="">
                     <th scope="col">ID</th>
@@ -77,7 +78,7 @@ while ($row = $allPosts->fetch_assoc()) {
                 <?php
                 foreach ($posts as $post) :
                 ?>
-                    <tr class="p-3">
+                    <tr class="p-3 <?php echo $post->media->type === 'video' ?  'table-secondary' : 'table-ligth'; ?>">
                         <th scope="row"><?= $post->id; ?></th>
                         <td><?= $post->user; ?></td>
                         <td><?= $post->title; ?></td>
