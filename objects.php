@@ -49,4 +49,22 @@ while ($row = $allPosts->fetch_assoc()) {
     array_push($posts, new Post($id, $user, $title, $date, $tags, addVideoOrPhoto($id, $medias)));
 }
 
-var_dump($posts);
+/* var_dump($posts); */
+?>
+
+<!doctype html>
+<html lang="en">
+
+<?php require_once __DIR__ . '/head.php' ?>
+<?php require_once __DIR__ . '/header.php' ?>
+
+<main>
+    <div class="container">
+
+    </div>
+</main>
+
+
+<?php require_once __DIR__ . '/footer.php' ?>
+
+</html>
