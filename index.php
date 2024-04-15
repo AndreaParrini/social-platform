@@ -6,37 +6,25 @@ require __DIR__ . '/./DB.php';
 /* Uso la funzione statica Connect() dell'oggetto DB, per connetterci al DB e associo il risultato alla variabile $connection */
 $connection = DB::Connect();
 
-/* controllo se la variabile $_POST[orderBy] è vuota */
-if (empty($_POST['orderBy'])) {
+/* Associo alla variabile $sql la query base da fare al database */
+$sql =
+    'SELECT `users`.*, COUNT(`likes`.`post_id`) AS `total_like`
+ FROM `users`
+ JOIN `posts` ON `posts`.`user_id` = `users`.`id`
+ JOIN `likes` ON `likes`.`post_id` = `posts`.`id`
+ GROUP BY `users`.`id`
+ ORDER BY `total_like`';
 
-    /* Associo alla variabile $sql la query da fare al database */
-    $sql =
-        'SELECT `users`.*, COUNT(`likes`.`post_id`) AS `total_like`
-         FROM `users`
-         JOIN `posts` ON `posts`.`user_id` = `users`.`id`
-         JOIN `likes` ON `likes`.`post_id` = `posts`.`id`
-         GROUP BY `users`.`id`
-         ORDER BY `total_like`';
-
-    /* Uso la funzione query() per recuperare tutti i risultati e li associo alla varibile $result  */
-    $result = $connection->query($sql);
-}
-
-/* contorllo se la la variabile $_POST[orderBy] non è vuota */
+/* controllo se la variabile $_POST[orderBy] non è vuota */
 if (!empty($_POST['orderBy'])) {
 
-    /* preparo la query da fare nel caso la varibile non è vuota concatenando la variabile alla query. */
-    $sql =
-        'SELECT `users`.*, COUNT(`likes`.`post_id`) AS `total_like`
-         FROM `users`
-         JOIN `posts` ON `posts`.`user_id` = `users`.`id`
-         JOIN `likes` ON `likes`.`post_id` = `posts`.`id`
-         GROUP BY `users`.`id`
-         ORDER BY `total_like`' . $_POST['orderBy'];
-
-    /* Uso la funzione query() per recuperare tutti i risultati e li associo alla varibile $result  */
-    $result = $connection->query($sql);
+    /* se non è vuoto associo alla query il valore della varibaile $_POST[orderBy] */
+    $sql .= $_POST['orderBy'];
 }
+
+/* associo alla variabile $result i risultati della funzione query(), alla quale passo la variabile $sql */
+$result = $connection->query($sql);
+
 
 /* Chiudo la connesione con il Database */
 DB::Close($connection);
